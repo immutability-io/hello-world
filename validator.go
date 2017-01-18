@@ -48,6 +48,7 @@ var (
 		Skipper:    defaultSkipper,
 		KeyLookup:  "header:" + echo.HeaderAuthorization,
 		AuthScheme: "Bearer",
+		CookieName: "token",
 	}
 )
 
@@ -81,12 +82,9 @@ func CookieAuthWithConfig(config CookieAuthConfig) echo.MiddlewareFunc {
 	}
 
 	// Initialize
-	parts := strings.Split(config.KeyLookup, ":")
-	extractor := keyFromHeader(parts[1], config.AuthScheme)
-	switch parts[0] {
-	case "query":
-		extractor = keyFromQuery(parts[1])
-	}
+	extractor := keyFromCookie(DefaultCookieAuthConfig.CookieName)
+
+}
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
@@ -132,6 +130,16 @@ func keyFromQuery(param string) keyExtractor {
 		key := c.QueryParam(param)
 		if key == "" {
 			return "", errors.New("Missing key in the query string")
+		}
+		return key, nil
+	}
+}
+
+func keyFromCookie(param string) keyExtractor {
+	return func(c echo.Context) (string, error) {
+		key := c.Cookie(param)
+		if key == "" {
+			return "", errors.New("Missing key in the cookie")
 		}
 		return key, nil
 	}
