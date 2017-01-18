@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/immutability-io/echo"
-	middleware "github.com/immutability-io/echo/middleware"
+	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 	"net/http"
 )
@@ -19,7 +19,7 @@ func main() {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	e.Use(middleware.KeyAuth(validator))
+	e.Use(CookieAuth(validator))
 	// Route => handler
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!\n")
