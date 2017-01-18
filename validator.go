@@ -41,7 +41,7 @@ type (
 var (
 	// DefaultCookieAuthConfig is the default CookieAuth middleware config.
 	DefaultCookieAuthConfig = CookieAuthConfig{
-		Skipper:    defaultSkipper,
+		Skipper:    middleware.defaultSkipper,
 		KeyLookup:  "header:" + echo.HeaderAuthorization,
 		AuthScheme: "Bearer",
 	}
