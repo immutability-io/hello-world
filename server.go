@@ -156,6 +156,9 @@ func keyFromQuery(param string) keyExtractor {
 func keyFromCookie(param string) keyExtractor {
 	return func(c echo.Context) (string, error) {
 		cookie, err := c.Cookie("username")
+		if err != nil {
+			return "", err
+		}
 		if cookie == nil {
 			return "", errors.New("Missing cookie")
 		}
