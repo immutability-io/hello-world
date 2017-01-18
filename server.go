@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/immutability-io/echo"
-	"github.com/immutability-io/echo/middleware"
+	middleware "github.com/immutability-io/echo/middleware"
 	"github.com/labstack/gommon/log"
 	"net/http"
 )
