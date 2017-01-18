@@ -1,20 +1,25 @@
 package main
 
 import (
+	"github.com/immutability-io/echo"
+	"github.com/immutability-io/echo/middleware"
+	"github.com/labstack/gommon/log"
 	"net/http"
-
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
 )
+
+func validator(key string, c echo.Context) bool {
+	c.Logger().Debug("Key " + key)
+	return key == "valid-key"
+}
 
 func main() {
 	// Echo instance
 	e := echo.New()
-
+	e.Logger.SetLevel(log.DEBUG)
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-
+	e.Use(middleware.KeyAuth(validator))
 	// Route => handler
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!\n")
