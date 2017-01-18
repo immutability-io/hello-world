@@ -6,7 +6,6 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 	"net/http"
-
 )
 
 func validator(key string, c echo.Context) bool {
@@ -69,7 +68,7 @@ var (
 	DefaultCookieAuthConfig = CookieAuthConfig{
 		Skipper:    defaultSkipper,
 		KeyLookup:  "token",
-		AuthScheme: "Bearer"
+		AuthScheme: "Bearer",
 	}
 )
 
