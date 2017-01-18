@@ -38,10 +38,14 @@ type (
 	keyExtractor func(echo.Context) (string, error)
 )
 
+func defaultSkipper(c echo.Context) bool {
+	return false
+}
+
 var (
 	// DefaultCookieAuthConfig is the default CookieAuth middleware config.
 	DefaultCookieAuthConfig = CookieAuthConfig{
-		Skipper:    middleware.defaultSkipper,
+		Skipper:    defaultSkipper,
 		KeyLookup:  "header:" + echo.HeaderAuthorization,
 		AuthScheme: "Bearer",
 	}
