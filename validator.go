@@ -13,7 +13,7 @@ type (
 	// CookieAuthConfig defines the config for CookieAuth middleware.
 	CookieAuthConfig struct {
 		// Skipper defines a function to skip middleware.
-		Skipper Skipper
+		Skipper middleware.Skipper
 
 		// KeyLookup is a string in the form of "<source>:<name>" that is used
 		// to extract key from the request.
