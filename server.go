@@ -1,13 +1,12 @@
 package main
 
 import (
+	"errors"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
-	"errors"
 	"net/http"
 	"strings"
-
 )
 
 func validator(key string, c echo.Context) bool {
@@ -31,7 +30,6 @@ func main() {
 	// Start server
 	e.Logger.Fatal(e.Start(":1323"))
 }
-
 
 type (
 	// CookieAuthConfig defines the config for CookieAuth middleware.
@@ -107,8 +105,6 @@ func CookieAuthWithConfig(config CookieAuthConfig) echo.MiddlewareFunc {
 
 	// Initialize
 	extractor := keyFromCookie(DefaultCookieAuthConfig.CookieName)
-
-}
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
