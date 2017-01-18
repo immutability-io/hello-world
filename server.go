@@ -156,10 +156,13 @@ func keyFromQuery(param string) keyExtractor {
 
 func keyFromCookie(param string) keyExtractor {
 	return func(c echo.Context) (string, error) {
-		key := c.Cookie(param)
-		if key == "" {
+		cookie, err := c.Cookie("username")
+		if cookie == nil {
+			return "", errors.New("Missing cookie")
+		}
+		if cookie.Value == "" {
 			return "", errors.New("Missing key in the cookie")
 		}
-		return key, nil
+		return cookie.Value, nil
 	}
 }
