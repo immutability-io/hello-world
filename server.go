@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 	"net/http"
-	"strings"
+
 )
 
 func validator(key string, c echo.Context) bool {
@@ -68,9 +68,8 @@ var (
 	// DefaultCookieAuthConfig is the default CookieAuth middleware config.
 	DefaultCookieAuthConfig = CookieAuthConfig{
 		Skipper:    defaultSkipper,
-		KeyLookup:  "header:" + echo.HeaderAuthorization,
-		AuthScheme: "Bearer",
-		CookieName: "token",
+		KeyLookup:  "token",
+		AuthScheme: "Bearer"
 	}
 )
 
@@ -104,7 +103,7 @@ func CookieAuthWithConfig(config CookieAuthConfig) echo.MiddlewareFunc {
 	}
 
 	// Initialize
-	extractor := keyFromCookie(DefaultCookieAuthConfig.CookieName)
+	extractor := keyFromCookie(DefaultCookieAuthConfig.KeyLookup)
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
